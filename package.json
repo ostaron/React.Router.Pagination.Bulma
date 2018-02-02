@@ -1,17 +1,17 @@
 {
-  "name": "react-router-pagination",
+  "name": "react-router-pagination-bulma",
   "version": "1.2.4",
-  "description": "React Router Pagination",
+  "description": "React Router Pagination with Bulma classNames and JSX tags",
   "main": "./index.js",
   "private": true,
   "author": {
-    "name": "Jonathan Perry from Sequence Media Limited",
-    "email": "sequencemedia@sequencemedia.net",
-    "url": "http://www.sequencemedia.net"
+    "name": "Fork by Benjie Kibblewhite, Original by: Jonathan Perry from Sequence Media Limited",
+    "email": "kibben@gmail.com",
+    "url": "http://www.benjie.ca"
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/sequencemedia/React.Router.Pagination.git"
+    "url": "https://github.com/ostaron/React.Router.Pagination.Bulma.git"
   },
   "license": "MIT",
   "scripts": {
