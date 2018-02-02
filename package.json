@@ -3,6 +3,7 @@
   "version": "1.2.4",
   "description": "React Router Pagination",
   "main": "./index.js",
+  "private": true,
   "author": {
     "name": "Jonathan Perry from Sequence Media Limited",
     "email": "sequencemedia@sequencemedia.net",

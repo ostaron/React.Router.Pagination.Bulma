@@ -5,18 +5,19 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import {
   Link
-} from 'react-router'
+}
+from 'react-router'
 
 export const toInteger = (v) => isNaN(v) ? 0 : parseInt(v, 10)
 
-function currentPageClassName (pageNumber, currentPageNumber) {
+function currentPageClassName(pageNumber, currentPageNumber) {
   if (pageNumber === currentPageNumber) return 'currentPage'
 }
 
 const pageKey = (currentPageKey) => `pagination-${currentPageKey}`
 const pageLinkPath = (path, currentPageNumber) => `${path}/${currentPageNumber}`
 
-export function calculateTotalPages (totalItemsInCollection, itemsPerPage) {
+export function calculateTotalPages(totalItemsInCollection, itemsPerPage) {
   const e = toInteger(totalItemsInCollection)
   const p = toInteger(itemsPerPage)
   const r = !!(e % p)
@@ -24,7 +25,7 @@ export function calculateTotalPages (totalItemsInCollection, itemsPerPage) {
   return (r) ? l + 1 : l
 }
 
-export function calculatePageNumber (pageNumber, totalPages) {
+export function calculatePageNumber(pageNumber, totalPages) {
   const p = toInteger(pageNumber)
   const t = toInteger(totalPages)
   return Math.max(1, Math.min(p, t))
@@ -39,48 +40,48 @@ export default class Pagination extends Component {
     totalPages: toInteger(this.props.totalPages)
   }
 
-  x () {
+  x() {
     return 0
   }
 
-  y () {
+  y() {
     return 0
   }
 
-  z () {
+  z() {
     return 0
   }
 
-  zeroIndex () {
+  zeroIndex() {
     return 0
   }
 
-  lastIndex () {
+  lastIndex() {
     return 0
   }
 
-  hasReversePageLink (pageNumber, totalPages) {
+  hasReversePageLink(pageNumber, totalPages) {
     return (this.zeroIndex(pageNumber, totalPages) - 1) > 0
   }
 
-  hasForwardPageLink (pageNumber, totalPages) {
+  hasForwardPageLink(pageNumber, totalPages) {
     return (this.lastIndex(pageNumber, totalPages) + 1) < totalPages
   }
 
-  hasZeroPageLink (pageNumber, totalPages) {
+  hasZeroPageLink(pageNumber, totalPages) {
     return this.zeroIndex(pageNumber, totalPages) > 0
   }
 
-  hasLastPageLink (pageNumber, totalPages) {
+  hasLastPageLink(pageNumber, totalPages) {
     return this.lastIndex(pageNumber, totalPages) < totalPages
   }
 
-  reversePageLinkItem (path, pageNumber, totalPages) {
+  reversePageLinkItem(path, pageNumber, totalPages) {
     if (this.hasReversePageLink(pageNumber, totalPages)) {
       const n = this.zeroIndex(pageNumber, totalPages)
       return (
-        <li key={pageKey('reverse')} className='reversePage'>
-          <Link to={pageLinkPath(path, n)} onClick={() => this.handleClick(n)}>
+        <li key={pageKey('reverse')} >
+          <Link className='pagination-previous' to={pageLinkPath(path, n)} onClick={() => this.handleClick(n)}>
             <span className='reverse'>
               {'\u00AB'}
             </span>
@@ -91,12 +92,12 @@ export default class Pagination extends Component {
     return null
   }
 
-  forwardPageLinkItem (path, pageNumber, totalPages) {
+  forwardPageLinkItem(path, pageNumber, totalPages) {
     if (this.hasForwardPageLink(pageNumber, totalPages)) {
       const n = this.lastIndex(pageNumber, totalPages) + 1
       return (
-        <li key={pageKey('forward')} className='forwardPage'>
-          <Link to={pageLinkPath(path, n)} onClick={() => this.handleClick(n)}>
+        <li key={pageKey('forward')} >
+          <Link className='pagination-next' to={pageLinkPath(path, n)} onClick={() => this.handleClick(n)}>
             <span className='forwardPage'>
               {'\u00BB'}
             </span>
@@ -107,12 +108,12 @@ export default class Pagination extends Component {
     return null
   }
 
-  zeroPageLinkItem (path, pageNumber, totalPages) {
+  zeroPageLinkItem(path, pageNumber, totalPages) {
     if (this.hasZeroPageLink(pageNumber, totalPages)) {
       const n = 1
       return (
-        <li key={pageKey(n)} className='zeroPage'>
-          <Link to={pageLinkPath(path, n)} onClick={() => this.handleClick(n)}>
+        <li key={pageKey(n)} >
+          <Link className='zeroPage pagination-link' aria-label="Goto page 1" to={pageLinkPath(path, n)} onClick={() => this.handleClick(n)}>
             <span className='pageNumber'>
               {n}
             </span>
@@ -123,12 +124,12 @@ export default class Pagination extends Component {
     return null
   }
 
-  lastPageLinkItem (path, pageNumber, totalPages) {
+  lastPageLinkItem(path, pageNumber, totalPages) {
     if (this.hasLastPageLink(pageNumber, totalPages)) {
       const n = totalPages
       return (
-        <li key={pageKey(n)} className='lastPage'>
-          <Link to={pageLinkPath(path, n)} onClick={() => this.handleClick(n)}>
+        <li key={pageKey(n)} >
+          <Link className='lastPage pagination-link' aria-label={`Goto page ${n}`} to={pageLinkPath(path, n)} onClick={() => this.handleClick(n)}>
             <span className='pageNumber'>
               {n}
             </span>
@@ -139,15 +140,15 @@ export default class Pagination extends Component {
     return null
   }
 
-  pageLinkItems (path, pageNumber, totalPages) {
+  pageLinkItems(path, pageNumber, totalPages) {
     let i = this.zeroIndex(pageNumber, totalPages)
     const j = this.lastIndex(pageNumber, totalPages)
     const a = []
     for (i, j; i < j; i = i + 1) {
       const n = (i + 1)
       a.push((
-        <li key={pageKey(n)} className={currentPageClassName(pageNumber, n)}>
-          <Link to={pageLinkPath(path, n)} onClick={() => this.handleClick(n)}>
+        <li key={pageKey(n)}>
+          <Link className={`${currentPageClassName(pageNumber, n)} pagination-link`} aria-label={`Goto Page ${n}`}to={pageLinkPath(path, n)} onClick={() => this.handleClick(n)}>
             <span className='pageNumber'>
               {n}
             </span>
@@ -158,14 +159,14 @@ export default class Pagination extends Component {
     return a
   }
 
-  componentWillReceiveProps ({ pageNumber, totalPages }) {
+  componentWillReceiveProps({ pageNumber, totalPages }) {
     this.setState({
       pageNumber: toInteger(pageNumber),
       totalPages: toInteger(totalPages)
     })
   }
 
-  shouldComponentUpdate (props) {
+  shouldComponentUpdate(props) {
     return (
       (props.pageNumber !== this.props.pageNumber) ||
       (props.totalPages !== this.props.totalPages) ||
@@ -174,7 +175,7 @@ export default class Pagination extends Component {
 
   handleClick = (pageNumber) => this.props.onClick(pageNumber)
 
-  render () {
+  render() {
     const { totalPages } = this.state
     if (totalPages > 1) {
       const { path } = this.props
@@ -182,23 +183,30 @@ export default class Pagination extends Component {
       const page = calculatePageNumber(pageNumber, totalPages)
       if (totalPages > this.z()) {
         return (
-          <ul className='pagination'>
-            {this.zeroPageLinkItem(path, page, totalPages)}
+          <nav class="pagination" role="navigation" aria-label="pagination">
             {this.reversePageLinkItem(path, page, totalPages)}
-            {this.pageLinkItems(path, page, totalPages)}
             {this.forwardPageLinkItem(path, page, totalPages)}
-            {this.lastPageLinkItem(path, page, totalPages)}
-          </ul>
-        )
-      } else {
+            <ul className='pagination-list'>
+              {this.zeroPageLinkItem(path, page, totalPages)}
+              <span className="pagination-ellipsis">&hellip;</span>
+              {this.pageLinkItems(path, page, totalPages)}
+              <span className="pagination-ellipsis">&hellip;</span>
+              {this.lastPageLinkItem(path, page, totalPages)}
+            </ul>
+          </nav>
+        );
+      }
+      else {
         return (
-          <ul className='pagination'>
-            {this.pageLinkItems(path, page, totalPages)}
-          </ul>
-        )
+          <nav className="pagination" role="navigation" aria-label="pagination">
+            <ul className='pagination-list'>
+              {this.pageLinkItems(path, page, totalPages)}
+            </ul>
+          </nav>
+        );
       }
     }
-    return null
+    return null;
   }
 }
 
@@ -213,11 +221,11 @@ Pagination.propTypes = {
     PropTypes.string,
     PropTypes.number
   ]).isRequired
-}
+};
 
 Pagination.defaultProps = {
   onClick: () => {},
   pageNumber: 0,
   path: '',
   totalPages: 0
-}
+};
